@@ -66,7 +66,6 @@ public class PlayerController : MonoBehaviour {
     }
 
     private IEnumerator StartMagnet() {
-        Debug.Log("Starting start magnet");
         if (stopMagnet != null)
             StopCoroutine(stopMagnet);
         magnetCone.gameObject.SetActive(true);
@@ -75,12 +74,10 @@ public class PlayerController : MonoBehaviour {
             yield return 0;
         }
         audio.volume = 1f;
-        Debug.Log("Stopping start magnet");
         StopCoroutine(startMagnet);
     }
 
     private IEnumerator StopMagnet() {
-        Debug.Log("Starting stop magnet");
         if (startMagnet != null)
             StopCoroutine(startMagnet);
         magnetCone.gameObject.SetActive(false);
@@ -89,7 +86,6 @@ public class PlayerController : MonoBehaviour {
             yield return 0;
         }
         audio.volume = 0f;
-        Debug.Log("Stopping stop magnet");
         StopCoroutine(stopMagnet);
     }
 }
