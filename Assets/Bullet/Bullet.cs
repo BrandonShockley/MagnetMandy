@@ -4,19 +4,20 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour {
 
-	[SerializeField] Vector2 direction;
-	[SerializeField] float speed;
+    private Rigidbody2D rb;
 
-	//When created from BulletShooter
-	public void Shoot(Vector2 direction, float speed)
+    private void Awake() {
+        rb = GetComponent<Rigidbody2D>();
+    }
+
+    //When created from BulletShooter
+    public void Shoot(Vector2 direction, float speed)
 	{
-		this.direction = direction.normalized;
-		this.speed = speed;
+        rb.velocity = direction.normalized * speed;
 	}
 
 	// Move Bullet
 	void Update () {
-		transform.position = transform.position + (Vector3)(direction * speed * Time.deltaTime);
 	}
 
 	
