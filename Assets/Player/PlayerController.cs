@@ -7,6 +7,9 @@ public class PlayerController : MonoBehaviour {
     const float ACCEL_RATIO = 10f;
     const float DECCEL_RATIO = 15f;
 
+    const float MAG_NOISE_GAIN = 1f;
+    const float MAG_NOISE_FADE = 2f;
+
     [SerializeField]
     private float walkSpeed;
 
