@@ -34,13 +34,15 @@ public class PlayerController : MonoBehaviour {
 	void FixedUpdate () {
         Move();
         TrackMouse();
+	}
 
+    private void Update() {
         //Mag
         if (Input.GetMouseButton(0) && !magnetCone.gameObject.activeInHierarchy)
             StartCoroutine(startMagnet = StartMagnet());
         if (!Input.GetMouseButton(0) && magnetCone.gameObject.activeInHierarchy)
             StartCoroutine(stopMagnet = StopMagnet());
-	}
+    }
 
     private void Move() {
         //WASD Control

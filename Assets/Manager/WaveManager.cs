@@ -8,6 +8,8 @@ public class WaveManager : MonoBehaviour {
 
     private int currentWave = 0;
 
+    public int deadenemies = 0;
+
 	// Use this for initialization
 	void Start () {
         //Init list of waves
@@ -17,12 +19,17 @@ public class WaveManager : MonoBehaviour {
                 waves[i].Add(transform.GetChild(i).GetChild(j));
             }
         }
+        Enemy.OnDeath += OnEnemyDeath;
 	}
 	
 	// Update is called once per frame
 	void Update () {
 		
 	}
+
+    void OnEnemyDeath() {
+        deadenemies++;
+    }
 
     void SpawnWave() {
         foreach (Transform enemy in waves[currentWave]) {
