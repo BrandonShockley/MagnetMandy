@@ -164,7 +164,33 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 1660682879365064, guid: a9c776c0249568f4f88bef89787be764, type: 2}
       propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 60330205665251046, guid: a9c776c0249568f4f88bef89787be764,
+        type: 2}
+      propertyPath: m_Offset.x
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4065905898239386, guid: a9c776c0249568f4f88bef89787be764, type: 2}
+      propertyPath: m_LocalPosition.y
+      value: 0.55
+      objectReference: {fileID: 0}
+    - target: {fileID: 60330205665251046, guid: a9c776c0249568f4f88bef89787be764,
+        type: 2}
+      propertyPath: m_Offset.y
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4065905898239386, guid: a9c776c0249568f4f88bef89787be764, type: 2}
+      propertyPath: m_LocalScale.y
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4065905898239386, guid: a9c776c0249568f4f88bef89787be764, type: 2}
+      propertyPath: m_LocalScale.x
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1660682879365064, guid: a9c776c0249568f4f88bef89787be764, type: 2}
+      propertyPath: m_TagString
+      value: MagCone
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 61971252403103450, guid: a9c776c0249568f4f88bef89787be764, type: 2}
@@ -175,6 +201,34 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 1528921585989070, guid: a9c776c0249568f4f88bef89787be764,
     type: 2}
   m_PrefabInternal: {fileID: 17608068}
+--- !u!1 &117695239
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 117695240}
+  m_Layer: 0
+  m_Name: WaveManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &117695240
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 117695239}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 5
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1001 &1232841282
 Prefab:
   m_ObjectHideFlags: 0
@@ -256,6 +310,17 @@ Prefab:
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 114514064319305720, guid: cb364dbcb94c7b04a86c5317b903c1f2,
+        type: 2}
+      propertyPath: defaultSpeed
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 212835198619979490, guid: cb364dbcb94c7b04a86c5317b903c1f2,
+        type: 2}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: e419f5fb21542d741890a24df699da36,
+        type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: cb364dbcb94c7b04a86c5317b903c1f2, type: 2}
   m_IsPrefabAsset: 0

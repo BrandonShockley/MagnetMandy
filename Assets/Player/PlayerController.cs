@@ -77,7 +77,6 @@ public class PlayerController : MonoBehaviour {
             yield return 0;
         }
         audio.volume = 1f;
-        StopCoroutine(startMagnet);
     }
 
     private IEnumerator StopMagnet() {
@@ -89,6 +88,5 @@ public class PlayerController : MonoBehaviour {
             yield return 0;
         }
         audio.volume = 0f;
-        StopCoroutine(stopMagnet);
     }
 }
