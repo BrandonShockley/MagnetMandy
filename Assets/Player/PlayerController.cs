@@ -14,10 +14,17 @@ public class PlayerController : MonoBehaviour {
     private Vector2 accel;
 
     private Rigidbody2D rb;
+    private new AudioSource audio;
+    private Transform magnetCone;
+
+    private IEnumerator startMagnet;
+    private IEnumerator stopMagnet;
     
 	// Use this for initialization
 	void Start () {
         rb = GetComponent<Rigidbody2D>();
+        audio = GetComponent<AudioSource>();
+        magnetCone = transform.GetChild(0);
 	}
 	
 	// Update is called once per frame
@@ -25,7 +32,11 @@ public class PlayerController : MonoBehaviour {
         Move();
         TrackMouse();
 
-
+        //Mag
+        if (Input.GetMouseButton(0) && !magnetCone.gameObject.activeInHierarchy)
+            StartCoroutine(startMagnet = StartMagnet());
+        if (!Input.GetMouseButton(0) && magnetCone.gameObject.activeInHierarchy)
+            StartCoroutine(stopMagnet = StopMagnet());
 	}
 
     private void Move() {
@@ -52,5 +63,33 @@ public class PlayerController : MonoBehaviour {
         Vector2 playerToMouse = mousePosition - (Vector2)transform.position;
 
         transform.rotation = Quaternion.Euler(0, 0, Mathf.Rad2Deg * Mathf.Atan2(playerToMouse.y, playerToMouse.x) - 90f);
+    }
+
+    private IEnumerator StartMagnet() {
+        Debug.Log("Starting start magnet");
+        if (stopMagnet != null)
+            StopCoroutine(stopMagnet);
+        magnetCone.gameObject.SetActive(true);
+        while (audio.volume < 1f) {
+            audio.volume += Time.deltaTime;
+            yield return 0;
+        }
+        audio.volume = 1f;
+        Debug.Log("Stopping start magnet");
+        StopCoroutine(startMagnet);
+    }
+
+    private IEnumerator StopMagnet() {
+        Debug.Log("Starting stop magnet");
+        if (startMagnet != null)
+            StopCoroutine(startMagnet);
+        magnetCone.gameObject.SetActive(false);
+        while (audio.volume > 0f) {
+            audio.volume -= Time.deltaTime * 2;
+            yield return 0;
+        }
+        audio.volume = 0f;
+        Debug.Log("Stopping stop magnet");
+        StopCoroutine(stopMagnet);
     }
 }
