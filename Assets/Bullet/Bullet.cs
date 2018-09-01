@@ -37,7 +37,7 @@ public class Bullet : MonoBehaviour {
     }
 
     void OnTriggerEnter2D(Collider2D other) {
-        if (!other.CompareTag("MagCone")) {
+        if (!(other.CompareTag("MagCone") || other.CompareTag("Bullet"))) {
             Destroy(this.gameObject);
         }
     }

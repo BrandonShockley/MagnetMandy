@@ -41,7 +41,7 @@ public class EnemyLocomotion : MonoBehaviour {
 	}
 
 	// Use this for initialization
-	void Start () {
+	void Awake () {
 		rigid = GetComponent<Rigidbody2D>();
 		player = GameObject.FindGameObjectWithTag("Player");
 	}
