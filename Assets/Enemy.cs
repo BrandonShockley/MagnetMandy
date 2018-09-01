@@ -5,6 +5,11 @@ using UnityEngine;
 [RequireComponent(typeof(EnemyLocomotion))]
 public class Enemy : MonoBehaviour {
 
+	public delegate void DeathAction();
+	public static event DeathAction OnDeath;
+
+	public int health = 1;
+
 	public float fireRate = 0.2f;
 	float bulletTimer = 0;
 
@@ -36,6 +41,19 @@ public class Enemy : MonoBehaviour {
 			shooter.ShootBullet(movement.DirectionToPlayer);
 			bulletTimer = 0;
 		}
-		
+	}
+
+	private void OnTriggerEnter2D(Collider2D collider)
+	{
+		if (collider.tag == "Bullet")
+		{
+			health--;
+			if (health <= 0)
+			{
+				if (OnDeath != null)
+					OnDeath();
+				Destroy(gameObject);
+			}
+		}
 	}
 }

@@ -229,28 +229,42 @@ Prefab:
       propertyPath: m_RootOrder
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 114618950457641656, guid: 6b571586509a0474c99661985ffe2a32,
+        type: 2}
+      propertyPath: fireRate
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 6b571586509a0474c99661985ffe2a32, type: 2}
   m_IsPrefabAsset: 0
---- !u!1 &740344498 stripped
+--- !u!1 &803419769
 GameObject:
-  m_CorrespondingSourceObject: {fileID: 1350741008263638, guid: 6b571586509a0474c99661985ffe2a32,
-    type: 2}
-  m_PrefabInternal: {fileID: 740344497}
---- !u!114 &740344499
-MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 740344498}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a083984662cce4e408d32485c773159b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  bullet: {fileID: 1678200952690640, guid: cc85d7037981a7d4a8733d256d0e76a0, type: 2}
-  defaultSpeed: 3
-  angleNoise: 0
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 803419770}
+  m_Layer: 0
+  m_Name: DynamicObjects
+  m_TagString: Dynamic
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &803419770
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 803419769}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0.63633865, y: -0.9679596, z: -0.0045041083}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_RootOrder: 4
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &1137149460 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1769883208067472, guid: cb364dbcb94c7b04a86c5317b903c1f2,
