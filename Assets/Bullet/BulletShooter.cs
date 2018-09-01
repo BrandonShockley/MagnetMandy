@@ -13,7 +13,7 @@ public class BulletShooter : MonoBehaviour {
 
 	public void ShootBullet(Vector2 direction, Vector2 startPosition, float speed)
 	{
-		GameObject bulletInst = Instantiate(bullet, startPosition, Quaternion.FromToRotation(Vector3.up, direction), transform);
+		GameObject bulletInst = Instantiate(bullet, startPosition, Quaternion.FromToRotation(Vector3.up, direction));
 		bulletInst.GetComponent<Bullet>().Shoot(direction, speed);
 	}
 

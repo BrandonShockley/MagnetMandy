@@ -82,9 +82,6 @@ public class EnemyLocomotion : MonoBehaviour {
 			return false;
 		}
 
-		Debug.Log(dir);
-		//transform.rotation.SetLookRotation(new Vector2(1,0));//Quaternion.FromToRotation(transform.forward, dir);
-
 		transform.rotation = Quaternion.Euler(0, 0, Mathf.Rad2Deg * Mathf.Atan2(dir.y, dir.x) - 90f);
 
 		return true;
