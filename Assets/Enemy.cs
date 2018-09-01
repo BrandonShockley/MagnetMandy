@@ -12,9 +12,9 @@ public class Enemy : MonoBehaviour {
 	}
 	
 	// Update is called once per frame
-	void Update () {
-		movement.MoveTowardsPlayer();
-		movement.RotateTowardsPlayer();
+	void FixedUpdate () {
+        movement.RotateTowardsPlayer();
+        movement.MoveTowardsPlayer();
 		//movement.ApplyDeceleration();
 	}
 }

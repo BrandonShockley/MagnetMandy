@@ -7,7 +7,6 @@ public class Bullet : MonoBehaviour {
     private const float FADE_SPEED = 10f;
 
     private float speed;
-    private bool influenced;
 
     private Rigidbody2D rb;
     private SpriteRenderer childSr;
@@ -21,8 +20,6 @@ public class Bullet : MonoBehaviour {
         childSr = transform.GetChild(0).GetComponent<SpriteRenderer>();
         lr = GetComponent<LineRenderer>();
         player = GameObject.FindGameObjectWithTag("Player").transform;
-
-        influenced = false;
     }
 
     //When created from BulletShooter
@@ -41,14 +38,7 @@ public class Bullet : MonoBehaviour {
 
     void OnTriggerStay2D(Collider2D other) {
         if (other.CompareTag("MagCone")) {
-            influenced = true;
             StartFade();
-        }
-    }
-
-    void OnTriggerExit2D(Collider2D other) {
-        if (other.CompareTag("MagCone")) {
-            influenced = false;
         }
     }
 
@@ -56,7 +46,6 @@ public class Bullet : MonoBehaviour {
         rb.AddForce(direction, ForceMode2D.Force);
         UpdateHeading();
         MaintainSpeed();
-        influenced = true;
     }
 
     private void UpdateHeading() {

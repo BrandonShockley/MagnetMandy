@@ -54,7 +54,7 @@ public class PlayerController : MonoBehaviour {
         if (!Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.S)) {
             accel.y = -rb.velocity.y * DECCEL_RATIO;
         }
-        rb.velocity += accel * Time.deltaTime;
+        rb.velocity += accel * Time.fixedDeltaTime;
 
 
         if (rb.velocity.magnitude > walkSpeed)
