@@ -9,6 +9,7 @@ public class Enemy : MonoBehaviour {
 	public static event DeathAction OnDeath;
 
 	public int health = 1;
+	public float distToShoot = 10f;
 
 	public float fireRate = 0.2f;
 	float bulletTimer = 0;
@@ -24,8 +25,10 @@ public class Enemy : MonoBehaviour {
 	// Update is called once per frame
 	void FixedUpdate () {
         movement.RotateTowardsPlayer();
-        movement.MoveTowardsPlayer();
-		//movement.ApplyDeceleration();
+		if (WithinDistToPlayer())
+			movement.ApplyDeceleration();
+		else
+			movement.MoveTowardsPlayer();
 	}
 
 	private void Update()
@@ -33,16 +36,7 @@ public class Enemy : MonoBehaviour {
 		Shoot();
 	}
 
-	void Shoot()
-	{
-		bulletTimer += Time.deltaTime;
-		if (bulletTimer > fireRate)
-		{
-			shooter.ShootBullet(movement.DirectionToPlayer);
-			bulletTimer = 0;
-		}
-	}
-
+	//Collision
 	private void OnTriggerEnter2D(Collider2D collider)
 	{
 		if (collider.tag == "Bullet")
@@ -56,4 +50,27 @@ public class Enemy : MonoBehaviour {
 			}
 		}
 	}
+
+	//Helpers
+	void Shoot()
+	{
+		bulletTimer += Time.deltaTime;
+		if (bulletTimer > fireRate)
+		{
+			shooter.ShootBullet(movement.DirectionToPlayer);
+			bulletTimer = 0;
+		}
+	}
+
+	bool WithinDistToPlayer()
+	{
+		return movement.DistanceToPlayer < distToShoot;
+	}
+
+	private void OnDrawGizmosSelected()
+	{
+		Gizmos.DrawWireSphere(transform.position, distToShoot);
+	}
+
+
 }

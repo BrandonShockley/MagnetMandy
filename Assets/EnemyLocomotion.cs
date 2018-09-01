@@ -28,6 +28,18 @@ public class EnemyLocomotion : MonoBehaviour {
 		}
 	}
 
+	public float DistanceToPlayer
+	{
+		get
+		{
+			if (player != null)
+			{
+				return (player.transform.position - transform.position).magnitude;
+			}
+			return -1;
+		}
+	}
+
 	// Use this for initialization
 	void Start () {
 		rigid = GetComponent<Rigidbody2D>();
