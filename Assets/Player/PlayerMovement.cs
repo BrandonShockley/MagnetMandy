@@ -27,24 +27,13 @@ public class PlayerMovement : MonoBehaviour {
                + Vector2.up * ((Input.GetKey(KeyCode.W) ? 1f : 0f) - (Input.GetKey(KeyCode.S) ? 1f : 0f))).normalized * walkSpeed * ACCEL_RATIO;
 
         //Slow down if key not held
-        bool xDeccelerating = false;
-        bool yDeccelerating = false;
         if (!Input.GetKey(KeyCode.D) && !Input.GetKey(KeyCode.A)) {
             accel.x = -rb.velocity.x * DECCEL_RATIO;
-            xDeccelerating = true;
         }
         if (!Input.GetKey(KeyCode.W) && !Input.GetKey(KeyCode.S)) {
             accel.y = -rb.velocity.y * DECCEL_RATIO;
-            yDeccelerating = true;
         }
-
-        Vector2 prevVelocity = rb.velocity;
         rb.velocity += accel * Time.deltaTime;
-        //Ensure no rebounding decceleration
-        /*if (xDeccelerating && Mathf.Sign(prevVelocity.x) != Mathf.Sign(rb.velocity.x))
-            rb.velocity.Set(0, rb.velocity.y);
-        if (yDeccelerating && Mathf.Sign(prevVelocity.y) != Mathf.Sign(rb.velocity.y))
-            rb.velocity.Set(rb.velocity.x, 0);*/
 
 
         if (rb.velocity.magnitude > walkSpeed)
