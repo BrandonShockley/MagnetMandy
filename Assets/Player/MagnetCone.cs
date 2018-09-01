@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class MagnetCone : MonoBehaviour {
 
+    public const float CONE_ANGLE = 30;
+
 	// Use this for initialization
 	void Start () {
 		

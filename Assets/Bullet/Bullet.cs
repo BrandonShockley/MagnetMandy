@@ -4,12 +4,25 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour {
 
+    private const float FADE_SPEED = 10f;
+
     private float speed;
+    private bool influenced;
 
     private Rigidbody2D rb;
+    private SpriteRenderer childSr;
+    private LineRenderer lr;
+    private IEnumerator fadeLine;
+
+    private Transform player;
 
     private void Awake() {
         rb = GetComponent<Rigidbody2D>();
+        childSr = transform.GetChild(0).GetComponent<SpriteRenderer>();
+        lr = GetComponent<LineRenderer>();
+        player = GameObject.FindGameObjectWithTag("Player").transform;
+
+        influenced = false;
     }
 
     //When created from BulletShooter
@@ -21,13 +34,29 @@ public class Bullet : MonoBehaviour {
 
 	// Move Bullet
 	void Update () {
+        //Update line positioning
+        lr.SetPosition(0, transform.position);
+        lr.SetPosition(1, player.position);
+    }
 
-	}
+    void OnTriggerStay2D(Collider2D other) {
+        if (other.CompareTag("MagCone")) {
+            influenced = true;
+            StartFade();
+        }
+    }
 
-	public void InfluenceTrajectory(Vector2 direction) {
+    void OnTriggerExit2D(Collider2D other) {
+        if (other.CompareTag("MagCone")) {
+            influenced = false;
+        }
+    }
+
+    public void InfluenceTrajectory(Vector2 direction) {
         rb.AddForce(direction, ForceMode2D.Force);
         UpdateHeading();
         MaintainSpeed();
+        influenced = true;
     }
 
     private void UpdateHeading() {
@@ -36,5 +65,30 @@ public class Bullet : MonoBehaviour {
 
     private void MaintainSpeed() {
         rb.velocity = rb.velocity.normalized * speed;
+    }
+
+    private void StartFade() {
+        if (fadeLine != null) {
+            StopCoroutine(fadeLine);
+        }
+        StartCoroutine(fadeLine = FadeLine());
+    }
+    private IEnumerator FadeLine() {
+        lr.enabled = true;
+        //Setup initial alpha
+        lr.startColor = new Color(lr.startColor.r, lr.startColor.g, lr.startColor.b, 1f);
+        lr.endColor = lr.startColor;
+        childSr.color = new Color(childSr.color.r, childSr.color.g, childSr.color.b, 1f);
+        yield return 0;
+        
+        while (lr.startColor.a > 0f) {
+            //Fade effect
+            float alpha = lr.startColor.a - Time.deltaTime * FADE_SPEED;
+            lr.startColor = new Color(lr.startColor.r, lr.startColor.g, lr.startColor.b, alpha);
+            lr.endColor = lr.startColor;
+            childSr.color = new Color(childSr.color.r, childSr.color.g, childSr.color.b, alpha);
+            yield return 0;
+        }
+        lr.enabled = false;
     }
 }
