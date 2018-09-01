@@ -36,6 +36,12 @@ public class Bullet : MonoBehaviour {
         lr.SetPosition(1, player.position);
     }
 
+    void OnTriggerEnter2D(Collider2D other) {
+        if (!other.CompareTag("MagCone")) {
+            Destroy(this.gameObject);
+        }
+    }
+
     void OnTriggerStay2D(Collider2D other) {
         if (other.CompareTag("MagCone")) {
             StartFade();
