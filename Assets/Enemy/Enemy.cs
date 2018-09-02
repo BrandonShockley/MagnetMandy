@@ -112,16 +112,16 @@ public class Enemy : MonoBehaviour {
 	bool CanSeePlayer()
 	{
 		Vector2 dir = movement.DirectionToPlayer;
-		RaycastHit2D hit = Physics2D.BoxCast((Vector2)transform.position + dir,new Vector2(.5f, .5f), 0f, dir, movement.DistanceToPlayer);
+		RaycastHit2D[] hits = Physics2D.BoxCastAll((Vector2)transform.position + dir, new Vector2(1f, 1f), Mathf.Rad2Deg * Mathf.Atan2(dir.y, dir.x), dir, movement.DistanceToPlayer);
 		Debug.DrawLine(transform.position, transform.position + (Vector3)(dir * movement.DistanceToPlayer));
 
-		if (hit.collider != null)
-		{
-			if (hit.collider.tag == "Obstacle" || hit.collider.tag == "Enemy")
-			{
-				return false;
-			}
-		}
+        foreach (RaycastHit2D hit in hits) {
+            if (hit.collider != null) {
+                if (hit.collider.tag == "Obstacle" || hit.collider.tag == "Enemy") {
+                    return false;
+                }
+            }
+        }
 		return true;
 	}
 
