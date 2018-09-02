@@ -5,7 +5,7 @@ using UnityEngine;
 public class BulletShooter : MonoBehaviour {
 
 	public GameObject bullet;
-	[Range(0, 5)]
+	[Range(0, 20)]
 	public float defaultSpeed = 1f;
 
 	[Range(0, 90)]
