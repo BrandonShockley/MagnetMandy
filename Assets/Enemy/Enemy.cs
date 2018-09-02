@@ -102,27 +102,30 @@ public class Enemy : MonoBehaviour {
 	{
 		Vector2 dir = movement.DirectionToPlayer;
 		RaycastHit2D hit = Physics2D.Raycast((Vector2)transform.position + dir, dir, movement.DistanceToPlayer);
-		Debug.Log(hit.collider.name);
 		Debug.DrawLine(transform.position, transform.position + (Vector3)(dir * movement.DistanceToPlayer));
 
-		if (hit.collider.name == transform.name) Debug.Log("Hitting self!");
-
-		if (hit.collider.tag == "Obstacle" || hit.collider.tag == "Enemy")
+		if (hit.collider != null)
 		{
-			return false;
+			if (hit.collider.tag == "Obstacle" || hit.collider.tag == "Enemy")
+			{
+				return false;
+			}
 		}
 		return true;
 	}
 
 	Collider2D FindCloseEnemy()
 	{
-		float dist = 2f;
+		float dist = 0.5f;
 		Debug.DrawLine(transform.position, transform.position + Vector3.right * dist);
-		RaycastHit2D hit = Physics2D.CircleCast(transform.position, dist, Vector2.zero);
+		RaycastHit2D[] hits = Physics2D.CircleCastAll(transform.position, dist, Vector2.zero);
 
-		if (hit.collider.tag == "Enemy" && hit.collider.transform != transform)
+		foreach (RaycastHit2D hit in hits)
 		{
-			return hit.collider;
+			if (hit.collider.tag == "Enemy" && hit.collider.transform != transform)
+			{
+				return hit.collider;
+			}
 		}
 		return null;
 	}

@@ -72,7 +72,7 @@ public class EnemyLocomotion : MonoBehaviour {
 
 	public void MoveAwayFromPoint(Vector2 pos)
 	{
-
+		rigid.velocity += ((Vector2)transform.position - pos) * accelerationSpeed;
 	}
 
 	public void ApplyDeceleration()
