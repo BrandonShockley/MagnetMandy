@@ -13,8 +13,7 @@ public class PlayerHealth : MonoBehaviour {
     private Sprite mainSprite;
 
     private SpriteRenderer sr;
-    [SerializeField]
-    private new AudioSource audio;
+    private SoundModulator soundMod;
 
     [SerializeField]
     private AudioClip hitSound;
@@ -23,7 +22,7 @@ public class PlayerHealth : MonoBehaviour {
 
     void Start() {
         sr = GetComponent<SpriteRenderer>();
-
+        soundMod = GetComponent<SoundModulator>();
         health = maxHealth;
         mainSprite = sr.sprite;
     }
@@ -32,7 +31,7 @@ public class PlayerHealth : MonoBehaviour {
         if (other.CompareTag("Bullet")) {
             health--;
             StartCoroutine(PlayHitAnimation());
-            audio.PlayOneShot(hitSound);
+            soundMod.PlayModulatedClip(hitSound);
         }
     }
 

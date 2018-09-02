@@ -16,10 +16,23 @@ public class Enemy : MonoBehaviour {
 
 	EnemyLocomotion movement;
 	BulletShooter shooter;
+    SpriteRenderer sr;
+
+    Sprite mainSprite;
+    [SerializeField]
+    Sprite hitSprite;
+
+    SoundModulator soundMod;
+    [SerializeField]
+    AudioClip hitSound;
 
 	void Start () {
 		movement = GetComponent<EnemyLocomotion>();
 		shooter = GetComponentInChildren<BulletShooter>();
+        sr = GetComponent<SpriteRenderer>();
+        soundMod = GetComponent<SoundModulator>();
+
+        mainSprite = sr.sprite;
 	}
 	
 	// Update is called once per frame
@@ -42,6 +55,8 @@ public class Enemy : MonoBehaviour {
 		if (collider.tag == "Bullet")
 		{
 			health--;
+            StartCoroutine(PlayHitAnimation());
+            soundMod.PlayModulatedClip(hitSound);
 			if (health <= 0)
 			{
 				if (OnDeath != null)
@@ -72,5 +87,17 @@ public class Enemy : MonoBehaviour {
 		Gizmos.DrawWireSphere(transform.position, distToShoot);
 	}
 
+    private IEnumerator PlayHitAnimation() {
+        bool isRed = false;
+        for (int i = 0; i < 6; i++) {
+            if (isRed) {
+                sr.sprite = mainSprite;
+            } else {
+                sr.sprite = hitSprite;
+            }
+            isRed = !isRed;
+            yield return new WaitForSeconds(.03f);
+        }
+    }
 
 }
