@@ -21,8 +21,13 @@ public class PlayerHealth : MonoBehaviour {
 
     [SerializeField]
     private AudioClip hitSound;
+    [SerializeField]
+    private AudioClip deathSound;
 
     private IEnumerator playHitAnimation;
+
+    public delegate void DeathAction();
+    public event DeathAction OnDeath;
 
     void Start() {
         sr = GetComponent<SpriteRenderer>();
@@ -35,8 +40,15 @@ public class PlayerHealth : MonoBehaviour {
         if (other.CompareTag("Bullet")) {
             health--;
             healthBar.value = health;
-            StartCoroutine(PlayHitAnimation());
-            soundMod.PlayModClip(hitSound);
+            if (health <= 0) {
+                if (OnDeath != null)
+                    OnDeath();
+                soundMod.PlayModClipLate(deathSound);
+                gameObject.SetActive(false);
+            } else {
+                StartCoroutine(PlayHitAnimation());
+                soundMod.PlayModClip(hitSound);
+            }
         }
     }
 
