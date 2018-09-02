@@ -37,7 +37,7 @@ public class Enemy : MonoBehaviour {
     [SerializeField]
     AudioClip deathSound;
 
-    bool isDead = false;
+    public bool isDead = false;
 
 	void Start () {
 		movement = GetComponent<EnemyLocomotion>();
@@ -82,8 +82,10 @@ public class Enemy : MonoBehaviour {
                 isDead = true;
                 if (OnDeath != null)
                     OnDeath();
+                Debug.Log("Death1");
                 soundMod.PlayModClipLate(deathSound);
                 Destroy(gameObject);
+                Debug.Log("Death2");
             } else {
                 StartCoroutine(PlayHitAnimation());
                 soundMod.PlayModClipLate(hitSound);
@@ -97,16 +99,7 @@ public class Enemy : MonoBehaviour {
 		bulletTimer += Time.deltaTime;
 		if (bulletTimer > fireRate && CanSeePlayer() && FindCloseEnemy() == null)
 		{
-            switch (fireMode) {
-                case FireMode.SINGLE:
-                    shooter.ShootBullet(movement.DirectionToPlayer);
-                    soundMod.PlayModClip(fireSound);
-                    bulletTimer = 0;
-                    break;
-                case FireMode.BURST:
-                    StartCoroutine(FireBurst());
-                    break;
-            }
+            StartCoroutine(Fire());
 			
 		}
 	}
@@ -119,7 +112,7 @@ public class Enemy : MonoBehaviour {
 	bool CanSeePlayer()
 	{
 		Vector2 dir = movement.DirectionToPlayer;
-		RaycastHit2D hit = Physics2D.Raycast((Vector2)transform.position + dir, dir, movement.DistanceToPlayer);
+		RaycastHit2D hit = Physics2D.BoxCast((Vector2)transform.position + dir,new Vector2(.5f, .5f), 0f, dir, movement.DistanceToPlayer);
 		Debug.DrawLine(transform.position, transform.position + (Vector3)(dir * movement.DistanceToPlayer));
 
 		if (hit.collider != null)
@@ -153,11 +146,11 @@ public class Enemy : MonoBehaviour {
 		Gizmos.DrawWireSphere(transform.position, distToShoot);
 	}
 
-    private IEnumerator FireBurst() {
-        for (int i = 0; i < 3; i++) {
+    private IEnumerator Fire() {
+        for (int i = 0; i < (fireMode == FireMode.BURST ? 3 : 1); i++) {
             shooter.ShootBullet(movement.DirectionToPlayer);
             soundMod.PlayModClip(fireSound);
-            bulletTimer = 0;
+            bulletTimer = Random.Range(-.5f, .5f);
             yield return new WaitForSeconds(.1f);
         }
     }
@@ -171,7 +164,7 @@ public class Enemy : MonoBehaviour {
                 sr.sprite = hitSprite;
             }
             isRed = !isRed;
-            yield return new WaitForSeconds(.03f);
+            yield return new WaitForSeconds(.04f);
         }
     }
 

@@ -38,16 +38,18 @@ public class PlayerHealth : MonoBehaviour {
 
     void OnTriggerEnter2D(Collider2D other) {
         if (other.CompareTag("Bullet")) {
-            health--;
-            healthBar.value = health;
-            if (health <= 0) {
-                if (OnDeath != null)
-                    OnDeath();
-                soundMod.PlayModClipLate(deathSound);
-                gameObject.SetActive(false);
-            } else {
-                StartCoroutine(PlayHitAnimation());
-                soundMod.PlayModClip(hitSound);
+            if (playHitAnimation == null) {
+                health--;
+                healthBar.value = health;
+                if (health <= 0) {
+                    if (OnDeath != null)
+                        OnDeath();
+                    soundMod.PlayModClipLate(deathSound);
+                    gameObject.SetActive(false);
+                } else {
+                    StartCoroutine(playHitAnimation = PlayHitAnimation());
+                    soundMod.PlayModClip(hitSound);
+                }
             }
         }
     }
@@ -61,7 +63,8 @@ public class PlayerHealth : MonoBehaviour {
                 sr.sprite = hitSprite;
             }
             isRed = !isRed;
-            yield return new WaitForSeconds(.03f);
+            yield return new WaitForSeconds(.04f);
         }
+        playHitAnimation = null;
     }
 }

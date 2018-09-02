@@ -22,6 +22,9 @@ public class WaveManager : MonoBehaviour {
     [SerializeField]
     private TextMeshProUGUI waveCounter;
 
+    [SerializeField]
+    private Animation waveAnimation;
+
 	// Use this for initialization
 	void Start () {
         //Init list of waves
@@ -35,18 +38,23 @@ public class WaveManager : MonoBehaviour {
         Enemy.OnDeath += OnEnemyDeath;
         NextWave();
 	}
-	
-	// Update is called once per frame
-	void Update () {
+
+    private void OnDisable() {
+        Enemy.OnDeath -= OnEnemyDeath;
+    }
+
+    // Update is called once per frame
+    void Update () {
 		
 	}
 
     void OnEnemyDeath() {
         currentEnemies--;
         if (currentEnemies <= 0) {
-            if (currentWave - 1 == waves.Count) {
+            if (currentWave + 1 < waves.Count) {
                 NextWave();
             } else {
+                waveAnimation.Play();
                 waveCounter.text = "You win!";
                 Debug.Log("You win!");
             }
@@ -54,6 +62,7 @@ public class WaveManager : MonoBehaviour {
     }
 
     void NextWave() {
+        waveAnimation.Play();
         CurrentWave++;
         currentEnemies = 0;
         foreach (Transform enemy in waves[CurrentWave]) {
