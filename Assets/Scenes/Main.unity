@@ -635,14 +635,6 @@ Prefab:
       propertyPath: healthBar
       value: 
       objectReference: {fileID: 1375986273}
-    - target: {fileID: 4065905898239386, guid: a9c776c0249568f4f88bef89787be764, type: 2}
-      propertyPath: m_LocalScale.y
-      value: 2.5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4065905898239386, guid: a9c776c0249568f4f88bef89787be764, type: 2}
-      propertyPath: m_LocalScale.x
-      value: 3
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a9c776c0249568f4f88bef89787be764, type: 2}
   m_IsPrefabAsset: 0
