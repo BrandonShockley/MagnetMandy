@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class Bullet : MonoBehaviour {
 
-    private const float FADE_SPEED = 10f;
+    private const float FADE_SPEED = 20f;
 
     private float speed;
     private float maxSpeed;

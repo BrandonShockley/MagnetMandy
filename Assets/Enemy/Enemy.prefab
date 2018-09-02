@@ -47,7 +47,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &4099811468447844
 Transform:
   m_ObjectHideFlags: 1
@@ -55,7 +55,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1350741008263638}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.219, y: 0.483, z: 0}
+  m_LocalPosition: {x: 0.23, y: 0.78, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 4813932003957934}
@@ -67,8 +67,8 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1842281261217210}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.25201008, y: -1.2669523, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: -0.09562284, y: -1.8902588, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children:
   - {fileID: 4099811468447844}
@@ -109,7 +109,7 @@ CircleCollider2D:
   m_UsedByComposite: 0
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
-  m_Radius: 0.29
+  m_Radius: 0.5
 --- !u!114 &114145356837409660
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -147,7 +147,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   bullet: {fileID: 1678200952690640, guid: cc85d7037981a7d4a8733d256d0e76a0, type: 2}
-  defaultSpeed: 9.8
+  defaultSpeed: 10
   angleNoise: 0
 --- !u!114 &114618950457641656
 MonoBehaviour:
@@ -162,7 +162,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   health: 5
   distToShoot: 10
-  fireRate: 1
+  fireMode: 1
+  fireRate: 3
   hitSprite: {fileID: 21300000, guid: cd3661bfa49ad5943987c5ee6b5e993a, type: 3}
   hitSound: {fileID: 8300000, guid: 416139a85dce2cf4e90ca7feff40ba97, type: 3}
   fireSound: {fileID: 8300000, guid: 40fed3f47d9f6bf439f7caba8690d044, type: 3}
