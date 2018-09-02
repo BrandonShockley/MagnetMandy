@@ -44,6 +44,7 @@ GameObject:
   - component: {fileID: 212807307818986168}
   - component: {fileID: 60330205665251046}
   - component: {fileID: 114554783351961518}
+  - component: {fileID: 50829332821866068}
   m_Layer: 0
   m_Name: Cone
   m_TagString: MagCone
@@ -98,6 +99,26 @@ Rigidbody2D:
   m_SleepingMode: 1
   m_CollisionDetection: 0
   m_Constraints: 0
+--- !u!50 &50829332821866068
+Rigidbody2D:
+  serializedVersion: 4
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1660682879365064}
+  m_BodyType: 1
+  m_Simulated: 1
+  m_UseFullKinematicContacts: 0
+  m_UseAutoMass: 0
+  m_Mass: 1
+  m_LinearDrag: 0
+  m_AngularDrag: 0.05
+  m_GravityScale: 1
+  m_Material: {fileID: 0}
+  m_Interpolate: 0
+  m_SleepingMode: 1
+  m_CollisionDetection: 0
+  m_Constraints: 7
 --- !u!58 &58903243925767676
 CircleCollider2D:
   m_ObjectHideFlags: 1
