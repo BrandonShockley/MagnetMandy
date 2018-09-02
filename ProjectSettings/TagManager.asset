@@ -8,6 +8,7 @@ TagManager:
   - MagCone
   - Dynamic
   - Enemy
+  - Obstacle
   layers:
   - Default
   - TransparentFX
