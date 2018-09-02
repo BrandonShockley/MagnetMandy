@@ -25,6 +25,8 @@ public class Enemy : MonoBehaviour {
     SoundModulator soundMod;
     [SerializeField]
     AudioClip hitSound;
+    [SerializeField]
+    AudioClip fireSound;
 
 	void Start () {
 		movement = GetComponent<EnemyLocomotion>();
@@ -73,6 +75,7 @@ public class Enemy : MonoBehaviour {
 		if (bulletTimer > fireRate)
 		{
 			shooter.ShootBullet(movement.DirectionToPlayer);
+            soundMod.PlayModulatedClip(fireSound);
 			bulletTimer = 0;
 		}
 	}
