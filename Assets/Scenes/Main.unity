@@ -635,12 +635,14 @@ Prefab:
       propertyPath: healthBar
       value: 
       objectReference: {fileID: 1375986273}
-    - target: {fileID: 82780522664603784, guid: a9c776c0249568f4f88bef89787be764,
-        type: 2}
-      propertyPath: OutputAudioMixerGroup
-      value: 
-      objectReference: {fileID: 24300002, guid: 3c417c2f68207c6488e7dcd7ab107664,
-        type: 2}
+    - target: {fileID: 4065905898239386, guid: a9c776c0249568f4f88bef89787be764, type: 2}
+      propertyPath: m_LocalScale.y
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4065905898239386, guid: a9c776c0249568f4f88bef89787be764, type: 2}
+      propertyPath: m_LocalScale.x
+      value: 3
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a9c776c0249568f4f88bef89787be764, type: 2}
   m_IsPrefabAsset: 0
@@ -930,10 +932,6 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4813932003957934, guid: 6b571586509a0474c99661985ffe2a32, type: 2}
       propertyPath: m_RootOrder
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 1842281261217210, guid: 6b571586509a0474c99661985ffe2a32, type: 2}
-      propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []
@@ -1271,7 +1269,7 @@ Camera:
   far clip plane: 1000
   field of view: 60
   orthographic: 1
-  orthographic size: 5
+  orthographic size: 6
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2

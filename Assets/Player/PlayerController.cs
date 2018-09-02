@@ -7,27 +7,33 @@ public class PlayerController : MonoBehaviour {
     const float ACCEL_RATIO = 10f;
     const float DECCEL_RATIO = 15f;
 
-    const float MAG_NOISE_GAIN = 1f;
+    const float MAG_NOISE_GAIN = 2f;
     const float MAG_NOISE_FADE = 2f;
 
     [SerializeField]
     private float walkSpeed;
 
     [SerializeField]
+    [Range(0f, 1f)]
+    private float rotationSpeed;
+
+    [SerializeField]
     private Vector2 accel;
 
     private Rigidbody2D rb;
     private new AudioSource audio;
-    private Transform magnetCone;
+    private MagnetCone magnetCone;
 
     private IEnumerator startMagnet;
     private IEnumerator stopMagnet;
+    private bool magnetOn;
     
 	// Use this for initialization
 	void Start () {
         rb = GetComponent<Rigidbody2D>();
         audio = GetComponent<AudioSource>();
-        magnetCone = transform.GetChild(0);
+        magnetCone = transform.GetChild(0).GetComponent<MagnetCone>();
+        magnetOn = false;
 	}
 	
 	// Update is called once per frame
@@ -38,10 +44,15 @@ public class PlayerController : MonoBehaviour {
 
     private void Update() {
         //Mag
-        if (Input.GetMouseButton(0) && !magnetCone.gameObject.activeInHierarchy)
+        if (Input.GetMouseButton(0) && !magnetCone.gameObject.activeInHierarchy) {
+            magnetOn = true;
             StartCoroutine(startMagnet = StartMagnet());
-        if (!Input.GetMouseButton(0) && magnetCone.gameObject.activeInHierarchy)
+        }
+        if (!Input.GetMouseButton(0) && magnetCone.gameObject.activeInHierarchy) {
+            magnetOn = false;
             StartCoroutine(stopMagnet = StopMagnet());
+        }
+            
     }
 
     private void Move() {
@@ -67,7 +78,11 @@ public class PlayerController : MonoBehaviour {
         Vector2 mousePosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
         Vector2 playerToMouse = mousePosition - (Vector2)transform.position;
 
-        transform.rotation = Quaternion.Euler(0, 0, Mathf.Rad2Deg * Mathf.Atan2(playerToMouse.y, playerToMouse.x) - 90f);
+        //Make the rotation non-instant
+        float targetAngle = Mathf.Rad2Deg * Mathf.Atan2(playerToMouse.y, playerToMouse.x) - 90f;
+        transform.rotation = Quaternion.Euler(0, 0, Mathf.LerpAngle(transform.rotation.eulerAngles.z,
+                                                                    targetAngle,
+                                                                    (magnetOn ? rotationSpeed / 2f : rotationSpeed)));
     }
 
     private IEnumerator StartMagnet() {
@@ -75,7 +90,7 @@ public class PlayerController : MonoBehaviour {
             StopCoroutine(stopMagnet);
         magnetCone.gameObject.SetActive(true);
         while (audio.volume < 1f) {
-            audio.volume += Time.deltaTime;
+            audio.volume += Time.deltaTime * MAG_NOISE_GAIN;
             yield return 0;
         }
         audio.volume = 1f;
@@ -84,9 +99,10 @@ public class PlayerController : MonoBehaviour {
     private IEnumerator StopMagnet() {
         if (startMagnet != null)
             StopCoroutine(startMagnet);
+        magnetCone.ReleaseChildren();
         magnetCone.gameObject.SetActive(false);
         while (audio.volume > 0f) {
-            audio.volume -= Time.deltaTime * 2;
+            audio.volume -= Time.deltaTime * MAG_NOISE_FADE;
             yield return 0;
         }
         audio.volume = 0f;

@@ -11,6 +11,13 @@ public class Enemy : MonoBehaviour {
 	public int health = 1;
 	public float distToShoot = 10f;
 
+    public enum FireMode {
+        SINGLE,
+        BURST
+    }
+
+    public FireMode fireMode;
+
 	public float fireRate = 0.2f;
 	float bulletTimer = 0;
 
@@ -29,6 +36,8 @@ public class Enemy : MonoBehaviour {
     AudioClip fireSound;
     [SerializeField]
     AudioClip deathSound;
+
+    bool isDead = false;
 
 	void Start () {
 		movement = GetComponent<EnemyLocomotion>();
@@ -59,15 +68,16 @@ public class Enemy : MonoBehaviour {
 		if (collider.tag == "Bullet")
 		{
 			health--;
-            StartCoroutine(PlayHitAnimation());
-            if (health <= 0) {
-                Debug.Log("Dead");
+            
+            if (health <= 0 && !isDead) {
+                isDead = true;
                 if (OnDeath != null)
                     OnDeath();
                 soundMod.PlayModClipLate(deathSound);
                 Destroy(gameObject);
             } else {
-                soundMod.PlayModClip(hitSound);
+                StartCoroutine(PlayHitAnimation());
+                soundMod.PlayModClipLate(hitSound);
             }
         }
 	}
@@ -78,9 +88,17 @@ public class Enemy : MonoBehaviour {
 		bulletTimer += Time.deltaTime;
 		if (bulletTimer > fireRate)
 		{
-			shooter.ShootBullet(movement.DirectionToPlayer);
-            soundMod.PlayModClip(fireSound);
-			bulletTimer = 0;
+            switch (fireMode) {
+                case FireMode.SINGLE:
+                    shooter.ShootBullet(movement.DirectionToPlayer);
+                    soundMod.PlayModClip(fireSound);
+                    bulletTimer = 0;
+                    break;
+                case FireMode.BURST:
+                    StartCoroutine(FireBurst());
+                    break;
+            }
+			
 		}
 	}
 
@@ -93,6 +111,15 @@ public class Enemy : MonoBehaviour {
 	{
 		Gizmos.DrawWireSphere(transform.position, distToShoot);
 	}
+
+    private IEnumerator FireBurst() {
+        for (int i = 0; i < 3; i++) {
+            shooter.ShootBullet(movement.DirectionToPlayer);
+            soundMod.PlayModClip(fireSound);
+            bulletTimer = 0;
+            yield return new WaitForSeconds(.1f);
+        }
+    }
 
     private IEnumerator PlayHitAnimation() {
         bool isRed = false;
