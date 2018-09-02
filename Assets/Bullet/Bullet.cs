@@ -20,7 +20,9 @@ public class Bullet : MonoBehaviour {
         rb = GetComponent<Rigidbody2D>();
         childSr = transform.GetChild(0).GetComponent<SpriteRenderer>();
         lr = GetComponent<LineRenderer>();
-        player = GameObject.FindGameObjectWithTag("Player").transform;
+        GameObject playerGO = GameObject.FindGameObjectWithTag("Player");
+        if (playerGO != null)
+            player = playerGO.transform;
     }
 
     //When created from BulletShooter
@@ -34,8 +36,18 @@ public class Bullet : MonoBehaviour {
 	// Move Bullet
 	void Update () {
         //Update line positioning
-        lr.SetPosition(0, transform.position);
-        lr.SetPosition(1, player.position);
+        if (player != null) {
+            lr.SetPosition(0, transform.position);
+            lr.SetPosition(1, player.position);
+        }
+
+        //Kill offscreen bullets
+        Vector2 screenPoint = Camera.main.WorldToScreenPoint(transform.position);
+        Rect screenRect = Camera.main.pixelRect;
+        screenRect.min = -screenRect.max;
+        screenRect.max *= 2;
+        if (!screenRect.Contains(screenPoint))
+            Destroy(this.gameObject);
     }
 
     void OnTriggerEnter2D(Collider2D other) {

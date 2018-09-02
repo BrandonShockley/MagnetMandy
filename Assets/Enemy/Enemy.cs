@@ -60,14 +60,15 @@ public class Enemy : MonoBehaviour {
 		{
 			health--;
             StartCoroutine(PlayHitAnimation());
-			if (health <= 0)
-			{
-				if (OnDeath != null)
-					OnDeath();
+            if (health <= 0) {
+                Debug.Log("Dead");
+                if (OnDeath != null)
+                    OnDeath();
                 soundMod.PlayModClipLate(deathSound);
-				Destroy(gameObject);
-			}
-            soundMod.PlayModClip(hitSound);
+                Destroy(gameObject);
+            } else {
+                soundMod.PlayModClip(hitSound);
+            }
         }
 	}
 
