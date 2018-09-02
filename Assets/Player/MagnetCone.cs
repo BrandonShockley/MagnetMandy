@@ -5,6 +5,7 @@ using UnityEngine;
 public class MagnetCone : MonoBehaviour {
 
     public const float CONE_ANGLE = 30;
+    public const float SLOW_RATIO = 1.5f;
 
 	// Use this for initialization
 	void Start () {

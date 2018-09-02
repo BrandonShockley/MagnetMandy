@@ -7,6 +7,7 @@ public class Bullet : MonoBehaviour {
     private const float FADE_SPEED = 10f;
 
     private float speed;
+    private float maxSpeed;
 
     private Rigidbody2D rb;
     private SpriteRenderer childSr;
@@ -24,6 +25,7 @@ public class Bullet : MonoBehaviour {
 
     //When created from BulletShooter
     public void Shoot(Vector2 direction, float speed) {
+        this.maxSpeed = speed;
         this.speed = speed;
         rb.velocity = direction.normalized * speed;
         UpdateHeading();
@@ -69,6 +71,8 @@ public class Bullet : MonoBehaviour {
         StartCoroutine(fadeLine = FadeLine());
     }
     private IEnumerator FadeLine() {
+        speed = maxSpeed / MagnetCone.SLOW_RATIO;
+        float deltaSpeed = maxSpeed - speed;
         lr.enabled = true;
         //Setup initial alpha
         lr.startColor = new Color(lr.startColor.r, lr.startColor.g, lr.startColor.b, 1f);
@@ -77,13 +81,20 @@ public class Bullet : MonoBehaviour {
         yield return 0;
         
         while (lr.startColor.a > 0f) {
+            float delta = Time.deltaTime * FADE_SPEED;
+            //Increase speed
+            speed += delta * deltaSpeed;
+            MaintainSpeed();
+
             //Fade effect
-            float alpha = lr.startColor.a - Time.deltaTime * FADE_SPEED;
+            float alpha = lr.startColor.a - delta;
             lr.startColor = new Color(lr.startColor.r, lr.startColor.g, lr.startColor.b, alpha);
             lr.endColor = lr.startColor;
             childSr.color = new Color(childSr.color.r, childSr.color.g, childSr.color.b, alpha);
             yield return 0;
         }
         lr.enabled = false;
+        speed = maxSpeed;
+        MaintainSpeed();
     }
 }

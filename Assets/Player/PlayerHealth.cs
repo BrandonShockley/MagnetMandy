@@ -1,12 +1,16 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class PlayerHealth : MonoBehaviour {
 
     [SerializeField]
     private int maxHealth;
     private int health;
+
+    [SerializeField]
+    private Slider healthBar;
 
     [SerializeField]
     private Sprite hitSprite;
@@ -30,8 +34,9 @@ public class PlayerHealth : MonoBehaviour {
     void OnTriggerEnter2D(Collider2D other) {
         if (other.CompareTag("Bullet")) {
             health--;
+            healthBar.value = health;
             StartCoroutine(PlayHitAnimation());
-            soundMod.PlayModulatedClip(hitSound);
+            soundMod.PlayModClip(hitSound);
         }
     }
 

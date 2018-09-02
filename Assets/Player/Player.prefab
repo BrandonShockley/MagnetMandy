@@ -282,7 +282,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 454d2a21ae3d50843b05fc769c97b9e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxHealth: 6
+  maxHealth: 10
+  healthBar: {fileID: 0}
   hitSprite: {fileID: 21300000, guid: 92e21754f7775b74d9f3055cd99ff42d, type: 3}
   hitSound: {fileID: 8300000, guid: 3f1eda88909d433408e3c28fc7339c03, type: 3}
 --- !u!114 &114554783351961518

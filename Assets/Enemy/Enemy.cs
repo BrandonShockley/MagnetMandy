@@ -27,6 +27,8 @@ public class Enemy : MonoBehaviour {
     AudioClip hitSound;
     [SerializeField]
     AudioClip fireSound;
+    [SerializeField]
+    AudioClip deathSound;
 
 	void Start () {
 		movement = GetComponent<EnemyLocomotion>();
@@ -58,14 +60,15 @@ public class Enemy : MonoBehaviour {
 		{
 			health--;
             StartCoroutine(PlayHitAnimation());
-            soundMod.PlayModulatedClip(hitSound);
 			if (health <= 0)
 			{
 				if (OnDeath != null)
 					OnDeath();
+                soundMod.PlayModClipLate(deathSound);
 				Destroy(gameObject);
 			}
-		}
+            soundMod.PlayModClip(hitSound);
+        }
 	}
 
 	//Helpers
@@ -75,7 +78,7 @@ public class Enemy : MonoBehaviour {
 		if (bulletTimer > fireRate)
 		{
 			shooter.ShootBullet(movement.DirectionToPlayer);
-            soundMod.PlayModulatedClip(fireSound);
+            soundMod.PlayModClip(fireSound);
 			bulletTimer = 0;
 		}
 	}

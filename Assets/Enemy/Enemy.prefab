@@ -164,7 +164,8 @@ MonoBehaviour:
   distToShoot: 10
   fireRate: 1
   hitSprite: {fileID: 21300000, guid: cd3661bfa49ad5943987c5ee6b5e993a, type: 3}
-  hitSound: {fileID: 0}
+  hitSound: {fileID: 8300000, guid: 416139a85dce2cf4e90ca7feff40ba97, type: 3}
+  fireSound: {fileID: 8300000, guid: 40fed3f47d9f6bf439f7caba8690d044, type: 3}
 --- !u!212 &212979636954885502
 SpriteRenderer:
   m_ObjectHideFlags: 1
