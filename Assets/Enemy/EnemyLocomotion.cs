@@ -70,6 +70,11 @@ public class EnemyLocomotion : MonoBehaviour {
 		return true;
 	}
 
+	public void MoveAwayFromPoint(Vector2 pos)
+	{
+
+	}
+
 	public void ApplyDeceleration()
 	{
 		if (rigid.velocity.sqrMagnitude > decelerationSpeed * decelerationSpeed) {

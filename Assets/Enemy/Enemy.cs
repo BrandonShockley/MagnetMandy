@@ -43,7 +43,16 @@ public class Enemy : MonoBehaviour {
 	void FixedUpdate () {
         movement.RotateTowardsPlayer();
 		if (WithinDistToPlayer())
-			movement.ApplyDeceleration();
+		{
+			Collider2D closeEnemy = FindCloseEnemy();
+			if (closeEnemy != null)
+			{
+				movement.MoveAwayFromPoint(closeEnemy.transform.position);
+			} else
+			{
+				movement.ApplyDeceleration();
+			}
+		}
 		else
 			movement.MoveTowardsPlayer();
 	}
@@ -76,7 +85,7 @@ public class Enemy : MonoBehaviour {
 	void Shoot()
 	{
 		bulletTimer += Time.deltaTime;
-		if (bulletTimer > fireRate)
+		if (bulletTimer > fireRate && CanSeePlayer() && FindCloseEnemy() == null)
 		{
 			shooter.ShootBullet(movement.DirectionToPlayer);
             soundMod.PlayModClip(fireSound);
@@ -87,6 +96,35 @@ public class Enemy : MonoBehaviour {
 	bool WithinDistToPlayer()
 	{
 		return movement.DistanceToPlayer < distToShoot;
+	}
+
+	bool CanSeePlayer()
+	{
+		Vector2 dir = movement.DirectionToPlayer;
+		RaycastHit2D hit = Physics2D.Raycast((Vector2)transform.position + dir, dir, movement.DistanceToPlayer);
+		Debug.Log(hit.collider.name);
+		Debug.DrawLine(transform.position, transform.position + (Vector3)(dir * movement.DistanceToPlayer));
+
+		if (hit.collider.name == transform.name) Debug.Log("Hitting self!");
+
+		if (hit.collider.tag == "Obstacle" || hit.collider.tag == "Enemy")
+		{
+			return false;
+		}
+		return true;
+	}
+
+	Collider2D FindCloseEnemy()
+	{
+		float dist = 2f;
+		Debug.DrawLine(transform.position, transform.position + Vector3.right * dist);
+		RaycastHit2D hit = Physics2D.CircleCast(transform.position, dist, Vector2.zero);
+
+		if (hit.collider.tag == "Enemy" && hit.collider.transform != transform)
+		{
+			return hit.collider;
+		}
+		return null;
 	}
 
 	private void OnDrawGizmosSelected()
